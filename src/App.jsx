@@ -4,8 +4,22 @@ import ContactsListPage from './components/ContactsListPage';
 import ViewContactPage from './components/ViewContactPage';
 import CreateContactPage from './components/CreateContactPage';
 import EditContactPage from './components/EditContactPage';
+import { useEffect, useState } from 'react';
+
+
 
 function App() {
+  const [contacts, setContacts] = useState(null)
+  const [currentContact, setCurrentContact] = useState(null)
+
+  // get all contacts on enter
+  useEffect(() => {
+    fetch('https://boolean-uk-api-server.fly.dev/pudkipz/contact')
+      .then(response => response.json())
+      .then(data => setContacts(data))
+  }, [])
+
+  // {console.log(contacts)}
   return (
     <main className='contacts-layout'>
       <nav className='menu'>
