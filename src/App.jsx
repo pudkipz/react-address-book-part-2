@@ -5,12 +5,12 @@ import ViewContactPage from './components/ViewContactPage';
 import CreateContactPage from './components/CreateContactPage';
 import EditContactPage from './components/EditContactPage';
 import { createContext, useEffect, useState } from 'react';
-
 const AppContext = createContext()
 
 function App() {
   const [contacts, setContacts] = useState(null)
   const [toggleFetchDep, setToggleFetchDep] = useState(true)
+  const [searchValue, setSearchValue] = useState('')
 
   // TODO: Consider moving this into ContactsListPage
   useEffect(() => {
@@ -41,15 +41,18 @@ function App() {
   // {console.log(contacts)}
   return (
     <main className='contacts-layout'>
+      <AppContext.Provider value={{contacts, setContacts, toggleFetch, searchValue}}>
       <nav className='menu'>
         <h2>Menu</h2>
         <ul>
           <li><Link to='/'>Contacts</Link></li>
           <li><Link to='/create'>New Contact</Link></li>
           <li><Link onClick={handleReset}>Reset contacts list</Link></li>
+          <li><input
+            onChange={e => setSearchValue(e.target.value)}
+            placeholder='Search contacts...'/></li>
         </ul>
       </nav>
-      <AppContext.Provider value={{contacts, setContacts, toggleFetch}}>
         <Routes>
           <Route
             path='/'
