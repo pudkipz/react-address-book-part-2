@@ -12,18 +12,17 @@ function App() {
   const [contacts, setContacts] = useState(null)
   const [toggleFetchDep, setToggleFetchDep] = useState(true)
 
-  // get all contacts on enter
+  // TODO: Consider moving this into ContactsListPage
   useEffect(() => {
     fetch('https://boolean-uk-api-server.fly.dev/pudkipz/contact')
       .then(response => response.json())
       .then(data => {
-        console.log(data)
+        // console.log(data)
         setContacts([...data])
   })
   }, [toggleFetchDep])
 
   const toggleFetch = () => {
-    console.log('togggggglingg')
     setContacts(null)
     setToggleFetchDep(!toggleFetchDep)
   }

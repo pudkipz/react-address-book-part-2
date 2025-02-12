@@ -25,7 +25,7 @@ export default function CreateContactPage() {
       },
       body: JSON.stringify(contact)
     })
-      .then(context.toggleFetch())
+      .then(() => context.toggleFetch())
 
     // reset form values
     setFormValues({firstName: '',
