@@ -4,9 +4,9 @@ import ContactsListPage from './components/ContactsListPage';
 import ViewContactPage from './components/ViewContactPage';
 import CreateContactPage from './components/CreateContactPage';
 import EditContactPage from './components/EditContactPage';
-import { useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 
-
+const AppContext = createContext()
 
 function App() {
   const [contacts, setContacts] = useState(null)
@@ -16,7 +16,10 @@ function App() {
   useEffect(() => {
     fetch('https://boolean-uk-api-server.fly.dev/pudkipz/contact')
       .then(response => response.json())
-      .then(data => setContacts(data))
+      .then(data => {
+        // console.log(data)
+        setContacts(data)
+  })
   }, [])
 
   // {console.log(contacts)}
@@ -29,27 +32,28 @@ function App() {
           <li><Link to='/create'>New Contact</Link></li>
         </ul>
       </nav>
-
-      <Routes>
-        <Route
-          path='/'
-          element={<ContactsListPage />}
-        />
-        <Route
-          path='/contact/:id'
-          element={<ViewContactPage />}
-        />
-        <Route
-          path='/create'
-          element={<CreateContactPage />}
-        />
-        <Route
-          path='/edit/:id'
-          element={<EditContactPage />}
-        />
-      </Routes>
+      <AppContext.Provider value={{contacts, setContacts, currentContact, setCurrentContact}}>
+        <Routes>
+          <Route
+            path='/'
+            element={<ContactsListPage />}
+          />
+          <Route
+            path='/contact/:id'
+            element={<ViewContactPage />}
+          />
+          <Route
+            path='/create'
+            element={<CreateContactPage />}
+          />
+          <Route
+            path='/contact/:id/edit'
+            element={<EditContactPage />}
+          />
+        </Routes>
+      </AppContext.Provider>
     </main>
-  );
+  )
 }
 
-export default App;
+export { App, AppContext };
