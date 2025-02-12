@@ -7,6 +7,19 @@ export default function ViewContactPage() {
   const id = useParams()
   const navigate = useNavigate()
 
+  const handleDelete = () => {
+    fetch(`https://boolean-uk-api-server.fly.dev/pudkipz/contact/${id.id}`, {
+      method: 'DELETE',
+      headers: {
+        Accept: 'application/json',
+        'Content-type': 'application/json'
+      },
+    })
+      .then(() => context.toggleFetch())
+
+    navigate('/')
+  }
+
   const contact = context.contacts.find((c) => {
     return c.id == id.id
     })
@@ -21,6 +34,8 @@ export default function ViewContactPage() {
       <p>{contact.street}, {contact.city}</p>
       <button
         onClick={() => navigate(`/contact/${id.id}/edit`)}>Edit</button>
+      <button
+        onClick={handleDelete}>Delete</button>
     </section>
   )
 }
