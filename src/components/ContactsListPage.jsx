@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 export default function ContactsListPage() {
   const context = useContext(AppContext)
 
-  console.log(context.contacts)
+  // console.log(context.contacts)
   return (
     <section className='contacts-list'>
       <h2>Contacts list</h2>
