@@ -33,3 +33,7 @@
 .create-contact ul {
     list-style-type: none;
 }
+
+.create-contact button {
+    /* float: left; */
+}

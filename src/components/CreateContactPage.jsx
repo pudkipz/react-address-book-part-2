@@ -1,4 +1,6 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { AppContext } from '../App'
 
 export default function CreateContactPage() {
   const [formValues, setFormValues] = useState(
@@ -8,6 +10,9 @@ export default function CreateContactPage() {
       city: ''
     }
   )
+
+  const navigate = useNavigate()
+  const context = useContext(AppContext)
 
   const handleSubmit = e => {
     e.preventDefault()
@@ -20,6 +25,16 @@ export default function CreateContactPage() {
       },
       body: JSON.stringify(contact)
     })
+      .then(context.toggleFetch())
+
+    // reset form values
+    setFormValues({firstName: '',
+      lastName: '',
+      street: '',
+      city: ''
+    })
+
+    navigate('/')
   }
 
   return (
@@ -36,7 +51,38 @@ export default function CreateContactPage() {
               value={formValues.firstName}
             />
           </li>
+
+          <li>
+            <b>Last name:</b>
+          </li>
+          <li>
+            <input
+              onChange={e => setFormValues({...formValues, lastName: e.target.value})}
+              value={formValues.lastName}
+            />
+          </li>
+
+          <li>
+            <b>City:</b>
+          </li>
+          <li>
+            <input
+              onChange={e => setFormValues({...formValues, city: e.target.value})}
+              value={formValues.city}
+            />
+          </li>
+
+          <li>
+            <b>Street:</b>
+          </li>
+          <li>
+            <input
+              onChange={e => setFormValues({...formValues, street: e.target.value})}
+              value={formValues.street}
+            />
+          </li>
         </ul>
+        <button type='submit'>Save</button>
         </form>
     </section>
   )

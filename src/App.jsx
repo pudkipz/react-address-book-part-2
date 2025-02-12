@@ -10,17 +10,23 @@ const AppContext = createContext()
 
 function App() {
   const [contacts, setContacts] = useState(null)
-  const [currentContact, setCurrentContact] = useState(null)
+  const [toggleFetchDep, setToggleFetchDep] = useState(true)
 
   // get all contacts on enter
   useEffect(() => {
     fetch('https://boolean-uk-api-server.fly.dev/pudkipz/contact')
       .then(response => response.json())
       .then(data => {
-        // console.log(data)
-        setContacts(data)
+        console.log(data)
+        setContacts([...data])
   })
-  }, [])
+  }, [toggleFetchDep])
+
+  const toggleFetch = () => {
+    console.log('togggggglingg')
+    setContacts(null)
+    setToggleFetchDep(!toggleFetchDep)
+  }
 
   // {console.log(contacts)}
   return (
@@ -32,7 +38,7 @@ function App() {
           <li><Link to='/create'>New Contact</Link></li>
         </ul>
       </nav>
-      <AppContext.Provider value={{contacts, setContacts, currentContact, setCurrentContact}}>
+      <AppContext.Provider value={{contacts, setContacts, toggleFetch}}>
         <Routes>
           <Route
             path='/'
