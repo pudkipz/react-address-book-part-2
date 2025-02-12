@@ -27,6 +27,17 @@ function App() {
     setToggleFetchDep(!toggleFetchDep)
   }
 
+  const handleReset = () => {
+    fetch(`https://boolean-uk-api-server.fly.dev/pudkipz/contact`, {
+      method: 'DELETE',
+      headers: {
+        Accept: 'application/json',
+        'Content-type': 'application/json'
+      },
+    })
+      .then(() => toggleFetch())
+  }
+
   // {console.log(contacts)}
   return (
     <main className='contacts-layout'>
@@ -35,6 +46,7 @@ function App() {
         <ul>
           <li><Link to='/'>Contacts</Link></li>
           <li><Link to='/create'>New Contact</Link></li>
+          <li><Link onClick={handleReset}>Reset contacts list</Link></li>
         </ul>
       </nav>
       <AppContext.Provider value={{contacts, setContacts, toggleFetch}}>
